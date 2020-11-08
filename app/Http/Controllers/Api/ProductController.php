@@ -16,11 +16,18 @@ class ProductController extends Controller
       //return view('sanpham/danhsachsanpham')->with('name', $products);
       return response()->json($products, 200);
    }
-   public function showbyId($id)
+   public function showbyIdforAdmin(Request $request)
    {
-      $products = Product::where('id', $id)->first();
+      $products = Product::where('id', $request->id)->first();
       return response()->json($products, 200);
    }
+
+   public function showbyIdforClient(Request $request)
+   {
+      $products = Product::where('id', $request->id)->first(['name', 'gia', 'hinhanh', 'mota']);
+      return response()->json($products, 200);
+   }
+
    public function addProduct(Request $request)
     {
         $params = $request->only('name','mota','gia','hinhanh','soluong','trangthai');

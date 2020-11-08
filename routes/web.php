@@ -35,8 +35,9 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-//
+//Public, khong can dang nhap
 Route::get('/products', 'Api\ProductController@index');
+Route::post('/getproductsbyidforclient', 'Api\ProductController@showbyIdforClient');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::group(['middleware' => 'isAdmin'], function () {
@@ -45,19 +46,19 @@ Route::group(['middleware' => 'auth.jwt'], function () {
         //category
         Route::get('/categorys', 'Api\CategoryController@index');
         //product
+        Route::post('/getproductsbyidforadmin', 'Api\ProductController@showbyIdforAdmin');
     });
     //user
-    Route::post('/users/{id}', 'Api\UserController@showbyId');
-    Route::put('users/{id}', 'Api\UserController@editUser');
-    Route::delete('users/{id}', 'Api\UserController@deleteUser');
+    Route::post('/getusers', 'Api\UserController@showbyId');
+    Route::put('editusers', 'Api\UserController@editUser');
+    Route::delete('deleteusers', 'Api\UserController@deleteUser');
     //category
     Route::post('/categorys', 'Api\CategoryController@addCategory');
     Route::post('/categorys/{id}', 'Api\CategoryController@showbyId');
     Route::put('/categorys/{id}', 'Api\CategoryController@editCategory');
     Route::delete('/categorys/{id}', 'Api\CategoryController@deleteCategory');
     //product
-    Route::post('/products', 'Api\ProductController@addProduct');
-    Route::post('/products/{id}', 'Api\ProductController@showbyId');
+    Route::post('/addproducts', 'Api\ProductController@addProduct');
     Route::put('/products/{id}', 'Api\ProductController@editProduct');
     Route::delete('/products/{id}', 'Api\ProductController@deleteProduct');
 });

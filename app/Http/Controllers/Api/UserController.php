@@ -16,18 +16,18 @@ class UserController extends Controller
       //return view('user/danhsachuser')->with('name', $users);
    }
 
-   public function showbyId(Request $request, $id)
+   public function showbyId(Request $request)
    {
       $user = User::where('id', $request->id)->first();
       return response()->json($user, 200);
    }
 
-   public function editUser(Request $request, $id)
+   public function editUser(Request $request)
    {
       try {
          $name = $request->name;
          $email = $request->email;       
-         $user = User::find($id);
+         $user = User::find($request->id);
          $user->name = $name;
          $user->email = $email;
          $user->update();
