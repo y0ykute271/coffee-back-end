@@ -35,6 +35,9 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
+//
+Route::get('/products', 'Api\ProductController@index');
+
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::group(['middleware' => 'isAdmin'], function () {
         //user
@@ -42,7 +45,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
         //category
         Route::get('/categorys', 'Api\CategoryController@index');
         //product
-        Route::get('/products', 'Api\ProductController@index');
     });
     //user
     Route::post('/users/{id}', 'Api\UserController@showbyId');
