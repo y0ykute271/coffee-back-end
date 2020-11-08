@@ -12,13 +12,13 @@ class UserController extends Controller
    {
       $users = User::all();
 
-      //return response()->json($users, 200);
-      return view('user/danhsachuser')->with('name', $users);
+      return response()->json($users, 200);
+      //return view('user/danhsachuser')->with('name', $users);
    }
 
-   public function showbyId($id)
+   public function showbyId(Request $request, $id)
    {
-      $user = User::where('id', $id)->first();
+      $user = User::where('id', $request->id)->first();
       return response()->json($user, 200);
    }
 
@@ -37,9 +37,9 @@ class UserController extends Controller
       }
    }
 
-   public function deleteUser($id)
+   public function deleteUser(Request $request, $id)
    {
-      User::destroy($id);
+      User::destroy($request->id);
       return response()->json('Xóa thành công!', 200);
    }
 }
