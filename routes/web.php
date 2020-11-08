@@ -31,7 +31,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('registerclient', 'Api\AuthController@dangkiclient');
     Route::post('login', 'Api\AuthController@login');
     Route::group(['middleware' => 'auth.jwt'], function () {
-        Route::post('/logout', 'Api\AuthController@logout');
+    Route::post('/logout', 'Api\AuthController@logout');
     });
 });
 

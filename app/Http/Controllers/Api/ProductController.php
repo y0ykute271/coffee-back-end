@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProductController extends Controller
@@ -22,16 +23,20 @@ class ProductController extends Controller
    }
    public function addProduct(Request $request)
     {
-        $params = $request->only('name','mota','gia','hinhanh','soluong','trangthai','baohanh');
+        $params = $request->only('name','mota','gia','hinhanh','soluong','trangthai');
+
+         $image_name=$request->file('hinhanh')->getClientOriginalName();
+
         $products = new product();
         $products->name = $params['name'];
         $products->mota = $params['mota'];
         $products->gia = $params['gia'];
-        $products->hinhanh = $params['hinhanh'];
+        $products->hinhanh = $image_name;
         $products->soluong = $params['soluong'];
         $products->trangthai = $params['trangthai'];
-        $products->baohanh = $params['baohanh'];
         $products->save();
+
+        Storage::disk('product_image')->put($image_name, file_get_contents($request->hinhanh));
 
         //$token = JWTAuth::attempt($params);
 
